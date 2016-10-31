@@ -1,5 +1,8 @@
-package com.cmcc.syw;
+package com.cmcc.syw.jvm;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -11,7 +14,7 @@ import java.util.concurrent.Executors;
 public class Test {
     private static Test HOOK = null;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 //        test1();
 //        try {
 //            test2();
@@ -20,7 +23,9 @@ public class Test {
 //        }
 //        test3();
 //        test4();
-        test5();
+//        test5();
+        test6();
+//        test7();
     }
 
     @Override
@@ -96,5 +101,39 @@ public class Test {
         while (true) {
             strs.add(String.valueOf(i++).intern());
         }
+    }
+
+    private static void test6(){
+        while(true){
+            ;
+        }
+    }
+
+    private static void test7() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        br.readLine();
+
+        new Thread(new Runnable() {
+            public void run() {
+               while(true){
+                   ;
+               }
+            }
+        }, "busyThread").start();
+
+        br.readLine();
+
+        final Object lock = new Object();
+        new Thread(new Runnable() {
+            public void run() {
+                synchronized (lock){
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, "lockThread").start();
     }
 }
