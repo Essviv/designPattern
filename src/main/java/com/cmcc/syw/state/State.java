@@ -10,5 +10,6 @@ package com.cmcc.syw.state;
  * Created by sunyiwei on 16-1-8.
  */
 public interface State {
-    void doSth();
+    //不同的状态会有不同的实现
+    void sayHello(int count);
 }
